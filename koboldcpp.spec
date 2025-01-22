@@ -27,6 +27,14 @@ world info, author's note, characters, scenarios and everything KoboldAI and Kob
 %make_build
 
 %install
-%make_install
+# Install script not exist
+#make_install
+
+install -Dpm644 -t %{buildroot}%{_bindir} koboldcpp.py
+
+#install -Dm644 "koboldcpp.py" "$pkgdir/usr/share/koboldcpp/koboldcpp.py"
+
+
+
 
 %files
