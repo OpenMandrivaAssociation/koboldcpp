@@ -1,3 +1,4 @@
+%undefine _debugsource_packages
 Name:		koboldcpp 
 Version:	1.82.2
 Release:	1
