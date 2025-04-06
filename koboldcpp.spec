@@ -1,6 +1,7 @@
 %undefine _debugsource_packages
+
 Name:		koboldcpp 
-Version:	1.82.2
+Version:	1.87.4
 Release:	1
 License:	AGPL3.0
 Summary:	Run GGUF models easily with a KoboldAI UI. One File. Zero Install. 
@@ -8,12 +9,14 @@ Group:		System/AI
 Url:		https://github.com/LostRuins/koboldcpp
 Source0:	https://github.com/LostRuins/koboldcpp/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: pkgconfig(python)
-BuildRequires: pkgconfig(vulkan)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(vulkan)
 
-Requires: tkinter
-Requires: python3dist(customtkinter)
+Requires:	tkinter
+Requires:	python%{pyver}dist(customtkinter)
 
+%patchlist
+https://codeberg.org/FreeBSD/freebsd-ports/raw/branch/main/misc/koboldcpp/files/patch-Makefile
 
 %description
 KoboldCpp is an easy-to-use AI text-generation software for GGML and GGUF models, inspired by the original KoboldAI. 
@@ -25,17 +28,19 @@ world info, author's note, characters, scenarios and everything KoboldAI and Kob
 %autosetup -p1
 
 %build
-%make_build
+%make_build PRESET_CFLAGS="%{optflags}" PRESET_CXXFLAGS="%{optflags}" LLAMA_OPENBLAS=1 LLAMA_VULKAN=1 LDFLAGS="%{build_ldflags}"
 
 %install
-# Install script not exist
-#make_install
-
-install -Dpm644 -t %{buildroot}%{_bindir} koboldcpp.py
-
-#install -Dm644 "koboldcpp.py" "$pkgdir/usr/share/koboldcpp/koboldcpp.py"
-
-
-
+mkdir -p %{buildroot}%{_libdir}/%{name} %{buildroot}%{_bindir}
+install -c -m 755 koboldcpp.py %{buildroot}%{_libdir}/%{name}/koboldcpp.py
+ln -s %{_libdir}/%{name}/koboldcpp.py %{buildroot}%{_bindir}/koboldcpp
+for lib in *.so; do
+	install -c -m 755 ${lib} %{buildroot}%{_libdir}/%{name}/
+done
+for embd in *.embd; do
+	install -c -m 644 ${embd} %{buildroot}%{_libdir}/%{name}/
+done
 
 %files
+%{_bindir}/koboldcpp
+%{_libdir}/%{name}
