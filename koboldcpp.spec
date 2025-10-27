@@ -59,3 +59,4 @@ install -m755 koboldcpp %{buildroot}/usr/bin/koboldcpp
 %files
 %{_bindir}/koboldcpp
 #{_libdir}/%{name}
+%{_datadir}/koboldcpp/
