@@ -1,7 +1,7 @@
 %undefine _debugsource_packages
 
 Name:		koboldcpp 
-Version:	1.87.4
+Version:	1.100.1
 Release:	1
 License:	AGPL3.0
 Summary:	Run GGUF models easily with a KoboldAI UI. One File. Zero Install. 
@@ -16,7 +16,7 @@ Requires:	tkinter
 Requires:	python%{pyver}dist(customtkinter)
 
 %patchlist
-https://codeberg.org/FreeBSD/freebsd-ports/raw/branch/main/misc/koboldcpp/files/patch-Makefile
+#https://codeberg.org/FreeBSD/freebsd-ports/raw/branch/main/misc/koboldcpp/files/patch-Makefile
 
 %description
 KoboldCpp is an easy-to-use AI text-generation software for GGML and GGUF models, inspired by the original KoboldAI. 
