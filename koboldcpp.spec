@@ -31,15 +31,30 @@ world info, author's note, characters, scenarios and everything KoboldAI and Kob
 %make_build PRESET_CFLAGS="%{optflags}" PRESET_CXXFLAGS="%{optflags}" LLAMA_OPENBLAS=1 LLAMA_VULKAN=1 LDFLAGS="%{build_ldflags}"
 
 %install
-mkdir -p %{buildroot}%{_libdir}/%{name} %{buildroot}%{_bindir}
-install -c -m 755 koboldcpp.py %{buildroot}%{_libdir}/%{name}/koboldcpp.py
-ln -s %{_libdir}/%{name}/koboldcpp.py %{buildroot}%{_bindir}/koboldcpp
-for lib in *.so; do
-	install -c -m 755 ${lib} %{buildroot}%{_libdir}/%{name}/
-done
-for embd in *.embd; do
-	install -c -m 644 ${embd} %{buildroot}%{_libdir}/%{name}/
-done
+rm -rf %{buildroot}
+
+# Main install location
+install -d %{buildroot}/usr/share/koboldcpp
+
+# Install Python launcher and shared libs
+install -m644 *.so %{buildroot}/usr/share/koboldcpp/
+install -m644 json_to_gbnf.py %{buildroot}/usr/share/koboldcpp/
+
+# Resources
+install -d %{buildroot}/usr/share/koboldcpp/embd_res
+install -m644 embd_res/* %{buildroot}/usr/share/koboldcpp/embd_res/
+
+install -d %{buildroot}/usr/share/koboldcpp/kcpp_adapters
+install -m644 kcpp_adapters/* %{buildroot}/usr/share/koboldcpp/kcpp_adapters/
+
+# Main Python script
+install -m644 koboldcpp.py %{buildroot}/usr/share/koboldcpp/koboldcpp.py
+
+# Wrapper executable
+install -d %{buildroot}/usr/bin
+echo '#!/bin/sh' > koboldcpp
+echo 'exec python3 /usr/share/koboldcpp/koboldcpp.py "$@"' >> koboldcpp
+install -m755 koboldcpp %{buildroot}/usr/bin/koboldcpp
 
 %files
 %{_bindir}/koboldcpp
