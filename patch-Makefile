@@ -1,7 +1,7 @@
---- Makefile
-+++ Makefile
-@@ -131,10 +131,10 @@
- else
+diff -uraN koboldcpp-1.100.1/Makefile omv-koboldcpp-1.100.1/Makefile
+--- koboldcpp-1.100.1/Makefile	2025-10-13 10:36:59.000000000 +0200
++++ omv-koboldcpp-1.100.1/Makefile	2025-10-28 21:12:02.063888519 +0100
+@@ -172,10 +172,10 @@
  FULLCFLAGS += -mavx2 -msse3 -mssse3 -mfma -mf16c -mavx
  endif # LLAMA_NOAVX2
  else
@@ -16,8 +16,7 @@
  endif # LLAMA_PORTABLE
  endif # if x86
  
-@@ -176,18 +176,18 @@
- else
+@@ -360,15 +360,15 @@
  # sve is cooked on termux so we are disabling it
  ifeq ($(UNAME_O), Android)
  ifneq ($(findstring clang, $(CCV)), )
