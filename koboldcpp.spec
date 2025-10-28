@@ -16,7 +16,7 @@ Requires:	tkinter
 Requires:	python%{pyver}dist(customtkinter)
 
 %patchlist
-#https://codeberg.org/FreeBSD/freebsd-ports/raw/branch/main/misc/koboldcpp/files/patch-Makefile
+patch-Makefile
 
 %description
 KoboldCpp is an easy-to-use AI text-generation software for GGML and GGUF models, inspired by the original KoboldAI. 
