@@ -1,40 +1,53 @@
---- a/Makefile.orig	2025-02-09 08:59:56 UTC
-+++ b/Makefile
-@@ -45,8 +45,8 @@ endif
- #
- 
- # keep standard at C11 and C++17
--CFLAGS =
--CXXFLAGS =
-+CFLAGS = $(PRESET_CFLAGS)
-+CXXFLAGS = $(PRESET_CXXFLAGS)
- ifdef KCPP_DEBUG
- 	CFLAGS = -g -O0
- 	CXXFLAGS = -g -O0
-@@ -151,7 +151,7 @@ else
- 	FULLCFLAGS += -mavx2 -msse3 -mssse3 -mfma -mf16c -mavx
+--- Makefile.original
++++ Makefile.patched
+@@ -124,17 +124,17 @@
+ # Architecture specific
+ # For x86 based architectures
+ ifeq ($(UNAME_M),$(filter $(UNAME_M),x86_64 i686 amd64))
+ ifdef LLAMA_PORTABLE
+ SIMPLECFLAGS += -mavx -msse3 -mssse3
+ SIMPLERCFLAGS += -msse3 -mssse3
+ ifdef LLAMA_NOAVX2
+ FULLCFLAGS += -msse3 -mssse3 -mavx
+ else
+ FULLCFLAGS += -mavx2 -msse3 -mssse3 -mfma -mf16c -mavx
  endif # LLAMA_NOAVX2
  else
--	CFLAGS += -march=native -mtune=native
-+	#CFLAGS += -march=native -mtune=native
+-CFLAGS += -march=native -mtune=native
+-SIMPLECFLAGS += -march=native -mtune=native
+-SIMPLERCFLAGS += -march=native -mtune=native
+-FULLCFLAGS += -march=native -mtune=native
++CFLAGS +=
++SIMPLECFLAGS +=
++SIMPLERCFLAGS +=
++FULLCFLAGS +=
  endif # LLAMA_PORTABLE
  endif # if x86
- 
-@@ -289,8 +289,8 @@ else
- 	CXXFLAGS += -mcpu=native
+@@ -169,21 +169,21 @@
+ # Apple M1, M2, etc.
+ # Raspberry Pi 3, 4, Zero 2 (64-bit)
+ ifdef LLAMA_PORTABLE
+ CFLAGS +=
+ CXXFLAGS +=
+ else
+ # sve is cooked on termux so we are disabling it
+ ifeq ($(UNAME_O), Android)
+ ifneq ($(findstring clang, $(CCV)), )
+-CFLAGS += -mcpu=native+nosve
+-CXXFLAGS += -mcpu=native+nosve
++CFLAGS +=
++CXXFLAGS +=
+ else
+-CFLAGS += -mcpu=native
+-CXXFLAGS += -mcpu=native
++CFLAGS +=
++CXXFLAGS +=
  endif
  else
--	CFLAGS += -mcpu=native
--	CXXFLAGS += -mcpu=native
-+	#CFLAGS += -mcpu=native
-+	#CXXFLAGS += -mcpu=native
+-CFLAGS += -mcpu=native
+-CXXFLAGS += -mcpu=native
++CFLAGS +=
++CXXFLAGS +=
  endif
  endif
  endif
-@@ -746,4 +746,4 @@ finishedmsg:
- #phony for printing messages
- finishedmsg:
- 	$(NOTIFY_MSG)
--	$(DONOTHING)
-\ No newline at end of file
-+	$(DONOTHING)
