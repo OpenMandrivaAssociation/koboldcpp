@@ -1,14 +1,6 @@
---- Makefile.original
-+++ Makefile.patched
-@@ -124,17 +124,17 @@
- # Architecture specific
- # For x86 based architectures
- ifeq ($(UNAME_M),$(filter $(UNAME_M),x86_64 i686 amd64))
- ifdef LLAMA_PORTABLE
- SIMPLECFLAGS += -mavx -msse3 -mssse3
- SIMPLERCFLAGS += -msse3 -mssse3
- ifdef LLAMA_NOAVX2
- FULLCFLAGS += -msse3 -mssse3 -mavx
+--- Makefile
++++ Makefile
+@@ -131,10 +131,10 @@
  else
  FULLCFLAGS += -mavx2 -msse3 -mssse3 -mfma -mf16c -mavx
  endif # LLAMA_NOAVX2
@@ -23,12 +15,8 @@
 +FULLCFLAGS +=
  endif # LLAMA_PORTABLE
  endif # if x86
-@@ -169,21 +169,21 @@
- # Apple M1, M2, etc.
- # Raspberry Pi 3, 4, Zero 2 (64-bit)
- ifdef LLAMA_PORTABLE
- CFLAGS +=
- CXXFLAGS +=
+ 
+@@ -176,18 +176,18 @@
  else
  # sve is cooked on termux so we are disabling it
  ifeq ($(UNAME_O), Android)
