@@ -9,6 +9,7 @@ Group:		System/AI
 Url:		https://github.com/LostRuins/koboldcpp
 Source0:	https://github.com/LostRuins/koboldcpp/archive/v%{version}/%{name}-%{version}.tar.gz
 
+BuildRequires:  make
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(vulkan)
 
