@@ -15,6 +15,7 @@ Source0:	https://github.com/LostRuins/koboldcpp/archive/refs/tags/v%{version}/ko
 # Distro optflags; do not let the Makefile strip (-s) debuginfo.
 Patch0:		0001-makefile-optflags.patch
 
+BuildRequires:	make
 BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	glslc
 BuildRequires:	python
