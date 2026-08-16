@@ -1,0 +1,24 @@
+--- a/Makefile	2026-08-15 16:50:04.000000000 +0200
++++ b/Makefile	2026-08-16 17:53:52.140452722 +0200
+@@ -45,8 +45,8 @@
+ #
+ 
+ # keep standard at C11 and C++17
+-CFLAGS =
+-CXXFLAGS =
++CFLAGS = $(PRESET_CFLAGS)
++CXXFLAGS = $(PRESET_CXXFLAGS)
+ ifdef KCPP_DEBUG
+ CFLAGS = -g -O0
+ CXXFLAGS = -g -O0
+@@ -59,8 +59,8 @@
+ CXXFLAGS += -I. -Iggml/include -Iggml/src -Iggml/src/ggml-cpu -Iinclude -Isrc -I./common -I./vendor -I./vendor/stb -I./include -I./otherarch -I./otherarch/tools -I./tools/mtmd -I./otherarch/sdcpp -I./otherarch/ttscpp/include -I./otherarch/ttscpp/src -I./otherarch/qwen3tts -I./otherarch/sdcpp/thirdparty -I./include/vulkan -O3 -fno-finite-math-only -std=c++17 -fPIC -DLOG_DISABLE_LOGS -D_GNU_SOURCE -DGGML_USE_CPU -DGGML_USE_CPU_REPACK -DGGML_USE_RPC
+ 
+ ifndef KCPP_DEBUG
+-CFLAGS += -DNDEBUG -s
+-CXXFLAGS += -DNDEBUG -s
++CFLAGS += -DNDEBUG
++CXXFLAGS += -DNDEBUG
+ endif
+ ifdef LLAMA_NO_LLAMAFILE
+ GGML_NO_LLAMAFILE := 1
