@@ -6,7 +6,7 @@
 
 Name:		koboldcpp
 Version:	1.119
-Release:	1
+Release:	2
 License:	AGPL-3.0-only AND MIT
 Summary:	Run GGUF models with a KoboldAI UI
 Group:		Sciences/Other
@@ -66,6 +66,8 @@ inst=%{buildroot}%{_libdir}/%{name}
 mkdir -p "$inst" %{buildroot}%{_bindir}
 install -m 0755 koboldcpp.py "$inst/koboldcpp.py"
 sed -i '1s|^#!/usr/bin/env python3|#!/usr/bin/python|' "$inst/koboldcpp.py"
+# Imported as "from json_to_gbnf import SchemaConverter"
+install -m 0644 json_to_gbnf.py "$inst/json_to_gbnf.py"
 ln -s %{_libdir}/%{name}/koboldcpp.py %{buildroot}%{_bindir}/koboldcpp
 
 # Backend plugins (CPU ISA + Vulkan). CUDA/HIP targets are no-ops
